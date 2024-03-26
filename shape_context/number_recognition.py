@@ -2,7 +2,8 @@ import numpy as np
 import cv2
 import sys
 from scipy.spatial.distance import cdist, cosine
-from shape_context import ShapeContext
+#from shape_context import ShapeContext
+from shape_context.shape_context import ShapeContext
 import matplotlib.pyplot as plt
 
 sc = ShapeContext()
@@ -11,9 +12,9 @@ def get_contour_bounding_rectangles(gray):
     """
       Getting all 2nd level bouding boxes based on contour detection algorithm.
     """
-    cnts = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cnts, _ = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     res = []
-    for cnt in cnts[1]:
+    for cnt in cnts:
         (x, y, w, h) = cv2.boundingRect(cnt)
         res.append((x, y, x + w, y + h))
 
@@ -56,12 +57,12 @@ def match(base, current):
         char = "/"
     return char
 
-base_0123456789 = parse_nums(sc, '../resources/sc/numbers.png')
-recognize = parse_nums(sc, '../resources/sc/numbers_test3.png')
-res = ""
-for r in recognize:
-    res += match(base_0123456789, r)
-img = cv2.imread('../resources/sc/numbers_test3.png')
-plt.imshow(img)
-plt.show()
-print res
+# base_0123456789 = parse_nums(sc, '../resources/sc/numbers.png')
+# recognize = parse_nums(sc, '../resources/sc/numbers_test3.png')
+# res = ""
+# for r in recognize:
+#     res += match(base_0123456789, r)
+# img = cv2.imread('../resources/sc/numbers_test3.png')
+# plt.imshow(img)
+# plt.show()
+# print(res)
